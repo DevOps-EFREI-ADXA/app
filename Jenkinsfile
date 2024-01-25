@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    appImage= docker.build "app:1.0.0"
+                    appImage= docker.build("app:1.0.0", "--build-arg VARIABLE=${BUILD_NUMBER} .")
                 }
             }
         }
