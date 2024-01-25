@@ -8,6 +8,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    sh 'mvn clean install -Drevision=${BUILD_NUMBER}'
                     appImage= docker.build("app:1.0.0", "--build-arg VARIABLE=${BUILD_NUMBER} .")
                 }
             }
