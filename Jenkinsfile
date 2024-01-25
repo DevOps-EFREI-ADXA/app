@@ -6,7 +6,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'mvn clean install'  
                     appImage=docker.build("app:1.0.0")
                 }
             }
