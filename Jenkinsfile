@@ -1,16 +1,25 @@
 def appImage = ''
+def versionNumber = ''
 
 pipeline {
     agent {
         label 'slave'
     }
     stages {
+
+        stage('Git clone') {
+            steps {
+                git branch: 'main', credentialsId: 'github_key', url: 'git@github.com:DevOps-EFREI-ADXA/app.git'
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
-                    sh 'mvn versions:set -DnewVersion=0.0.${BUILD_NUMBER}'
-                    sh 'mvn clean install -Drevision=${BUILD_NUMBER}'
-                    appImage= docker.build("danny07/app:1.0.0", "--build-arg VARIABLE=0.0.${BUILD_NUMBER} .")
+                    versionNumber = "1.0.${BUILD_NUMBER}"
+                    echo "Building the app with version ${versionNumber}"
+                    sh "mvn versions:set -DnewVersion=${versionNumber}"
+                    appImage= docker.build("danny07/app:${versionNumber}", "--build-arg VARIABLE=${versionNumber} .")
                 }
             }
         }
@@ -23,10 +32,12 @@ pipeline {
                 }
             }
         }
-        // stage('Heatlh Check') {
-        //     steps {
-        //         echo 'Testing..'
-        //     }
-        // }
+        stage('Deploy K8s') {
+            steps {
+                script {
+                    sh "kubectl set image deployment/app app=danny07/app:${versionNumber}"
+                }
+            }
+        }
     }
 }

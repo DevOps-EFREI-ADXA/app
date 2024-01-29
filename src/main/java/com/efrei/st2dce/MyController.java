@@ -10,6 +10,6 @@ public class MyController {
 
     @GetMapping
     public String getGreetings() {
-        return "Hello, from ADXA (Antoine, Daniel, Xing, Aliaa) for Devops and Continuous Deployment final project";
+        return "Hello, from ADXA (Antoine, Daniel, Xing, Aliaa) for Devops and Continuous Deployment final project.\nThis a test use case for the CI/CD pipeline.";
     }
 }
