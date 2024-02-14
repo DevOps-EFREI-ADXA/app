@@ -1,36 +1,38 @@
-# Example: https://github.com/prometheus/prometheus/blob/release-2.49/documentation/examples/prometheus-kubernetes.yml
-global:
-  scrap_interval: 15s
+alertmanager:
+  config:
+    route:
+      receiver: 'email-notifications'
+    receivers:
+      - name: 'email-notifications'
+        email_configs:
+          - to: 'to@email.com'
+            from: 'your_email@email.com'
+            smarthost: 'smtp.office365.com:587'
+            auth_username: 'your_email@email.com'
+            auth_password_file: '/etc/alertmanager/secrets/auth_password'
+            auth_identity: 'your_email@email.com'
+            headers:
+              subject: 'ADXA (Antoine, Daniel, Xing, Aliaa): at least 2 replicas in production - Prometheus alert'
+  extraVolumeMounts:
+    - name: alertmanager-smtp-secret
+      mountPath: '/etc/alertmanager/secrets'
+      readOnly: true
+  extraVolumes:
+    - name: alertmanager-smtp-secret
+      secret:
+        # Kubernetes secret name
+        secretName: alertmanager-smtp-secret
 
-scrape_configs:
-  - job_name: 'st2dce-application'
-    kubernetes_sd_configs:
-      - role: endpoints
-    namespaces:
-      names:
-        - development
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
-        action: replace
-        target_label: __scheme__
-        regex: (https?)
-      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-        action: replace
-        target_label: __address__
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-      - action: labelmap
-        regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
-        target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_service_name]
-        action: replace
-        target_label: kubernetes_name
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: 'Kubernetes at least 2 replicas in production'
+        rules:
+          - alert: AtLeastTwpReplicasInProduction
+            expr: kube_deployment_status_replicas_ready{namespace="production"} < 2
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: Kubernetes At least 2 replicas in production (instance {{ $labels.instance }})
+              description: 'Kubernetes At least 2 replicas in production (instance {{ $labels.instance }})'
