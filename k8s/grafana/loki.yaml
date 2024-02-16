@@ -1,4 +1,6 @@
 loki:
+  # Avoid using a proxy for Grafana Loki authentication.
+  auth_enabled: false
   commonConfig:
     replication_factor: 1
   storage:
