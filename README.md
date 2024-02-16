@@ -1,5 +1,9 @@
 # DevOps ADXA
 
+## Requirement
+
+[Helm](https://helm.sh/docs/intro/install/)
+
 ## Build Docker image
 
 ```bash
