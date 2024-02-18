@@ -1,8 +1,19 @@
 # DevOps ADXA
 
-## Requirement
+## Requirements
 
-[Helm](https://helm.sh/docs/intro/install/)
+[Helm](https://helm.sh/docs/intro/install/)  
+[Prometheus](https://prometheus.io/)  
+[Grafana](https://grafana.com/)
+
+After having installed Helm, you can add the prometheus and grafana repositories with the following commands:
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+```
+
+They will be installed when needed in the Install part.
 
 ## Build Docker image
 
