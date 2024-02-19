@@ -36,13 +36,13 @@ kubectl apply -f k8s/k8s-prod.yaml --namespace production
 ### Metrics (Prometheus)
 
 ```bash
- ./scripts/install-prometheus.sh YOUR_EMAIL@email.com YOUR_PASSWORD to@email.com
+./scripts/install-prometheus.sh YOUR_EMAIL@email.com YOUR_PASSWORD to@email.com
 ```
 
 ### Logs (Loki)
 
 ```bash
- ./scripts/install-loki.sh
+./scripts/install-loki.sh
 ```
 
 ## Port forward
@@ -95,16 +95,7 @@ helm get values prometheus -n prometheus
 ## Clean up
 
 ```bash
-helm uninstall prometheus -n prometheus
-helm uninstall grafana -n prometheus
-helm uninstall loki -n loki
-kubectl delete secret alertmanager-smtp-secret -n prometheus
-
-kubectl delete deploy --all -n development
-kubectl delete deploy --all -n production
-kubectl delete service --all -n development
-kubectl delete service --all -n production
-kubectl delete namespace development production prometheus
+./scripts/clean-up.sh
 ```
 
 ## Acknowledge
