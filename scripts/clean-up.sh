@@ -6,6 +6,8 @@ echo "Uninstalling 'grafana'..."
 helm uninstall grafana -n prometheus
 echo "Uninstalling 'loki'..."
 helm uninstall loki -n loki
+echo "Uninstalling 'promtail'..."
+helm uninstall promtail -n loki
 echo "Uninstalling 'alertmanager-smtp-secret' secret..."
 kubectl delete secret alertmanager-smtp-secret -n prometheus
 
