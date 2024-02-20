@@ -28,7 +28,7 @@ serverFiles:
     groups:
       - name: 'Kubernetes at least 2 replicas in production'
         rules:
-          - alert: AtLeastTwpReplicasInProduction
+          - alert: AtLeastTwoReplicasInProduction
             expr: kube_deployment_status_replicas_ready{namespace="production"} < 2
             for: 10m
             labels:
