@@ -27,9 +27,3 @@ dashboardProviders:
         options:
           # `path` must be /var/lib/grafana/dashboards/<provider_name>
           path: /var/lib/grafana/dashboards/default
-
-# Configure grafana dashboard to import
-dashboard:
-  default:
-    requests-dashboard:
-      file: ./dashboard/requests-dashboard.json
