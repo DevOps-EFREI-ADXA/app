@@ -45,7 +45,7 @@ pipeline {
                 script {
                     sh "ls -a"
                     sh "chmod +x scripts/deploy-infrastructure.sh"
-                    sh "./deploy-infrastructure development ${versionNumber}"
+                    sh ".scripts/deploy-infrastructure development ${versionNumber}"
                 }
             }
         }
