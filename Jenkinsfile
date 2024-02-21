@@ -44,6 +44,7 @@ pipeline {
             steps {
                 script {
                     sh "cd scripts/ chmod +x deploy-infrastructure.sh development ${versionNumber} && cd .."
+                    sh "minikube kubectl get pods"
                 }
             }
         }

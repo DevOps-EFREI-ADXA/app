@@ -12,5 +12,3 @@ minikube kubectl -- config set-context --current --namespace=$env
 
 minikube kubectl -- apply -f k8s/k8s-dev.yaml
 minikube kubectl -- set image deployment/st2dce-application st2dce-application=danny07/app:${versionNumber}
-
-minikube kubectl get pods
