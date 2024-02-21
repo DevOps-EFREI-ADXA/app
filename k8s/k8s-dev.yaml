@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: st2dce-application
-          image: danny07/app:1.0.31
+          image: danny07/app:<VERSION>
           ports:
             - containerPort: 8080
 ---
