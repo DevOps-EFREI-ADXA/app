@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     sh "cd scripts/ chmod +x test-deploy.sh && cd .."
-                    sh 'minikube kubectl -- port-forward deployment/st2dce-application 8080 --namespace development'
+                    sh 'minikube kubectl -- port-forward deployment/st2dce-application 8080 --namespace developmen &'
                     sh 'curl http://localhost:8080'
                 }
             }
