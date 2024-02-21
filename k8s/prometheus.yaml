@@ -7,7 +7,7 @@ alertmanager:
         email_configs:
           - to: 'to@email.com'
             from: 'your_email@email.com'
-            smarthost: 'smtp.office365.com:587'
+            smarthost: 'smtp.emailprovider.com:PORT'
             auth_username: 'your_email@email.com'
             auth_password_file: '/etc/alertmanager/secrets/auth_password'
             auth_identity: 'your_email@email.com'
