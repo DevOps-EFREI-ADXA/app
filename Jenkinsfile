@@ -32,10 +32,19 @@ pipeline {
                 }
             }
         }
+        stage ('Setup Helm charts') {
+            steps {
+                script {
+                    sh "helm repo add prometheus-community https://prometheus-community.github.io/helm-charts"
+                    sh "helm repo add grafana https://grafana.github.io/helm-charts"
+                }
+            }
+        }
         stage('Deploy K8s') {
             steps {
                 script {
-                    sh "kubectl set image deployment/app app=danny07/app:${versionNumber}"
+                    sh "chmod +x scripts/deploy-infrastructure.sh"
+                    sh "./deploy-infrastructure.sh development ${versionNumber}"
                 }
             }
         }

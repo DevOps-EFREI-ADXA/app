@@ -15,6 +15,6 @@ public class MyController {
     @GetMapping
     public String getGreetings() {
         logger.debug("GET / is running successfully.");
-        return "Hello, from ADXA (Antoine, Daniel, Xing, Aliaa) for Devops and Continuous Deployment final project.";
+        return "Hello, from ADXA (Antoine, Daniel, Xing, Aliaa) for Devops and Continuous Deployment final project for testing purposes.";
     }
 }
