@@ -36,7 +36,7 @@ kubectl apply -f k8s/k8s-prod.yaml --namespace production
 ### Metrics (Prometheus)
 
 ```bash
-./scripts/install-prometheus.sh YOUR_EMAIL@email.com YOUR_PASSWORD to@email.com smtp.mailprovider.com:PORT
+./scripts/install-prometheus.sh YOUR_EMAIL@email.com YOUR_PASSWORD to@email.com "smtp.mailprovider.com:PORT"
 ```
 
 ### Logs (Loki)
