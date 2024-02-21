@@ -43,9 +43,7 @@ pipeline {
         stage('Deploy K8s') {
             steps {
                 script {
-                    sh "ls -a"
-                    sh "chmod +x scripts/deploy-infrastructure.sh"
-                    sh "./scripts/deploy-infrastructure.sh development ${versionNumber}"
+                    sh "cd scripts/ chmod +x deploy-infrastructure.sh development ${versionNumber} && cd .."
                 }
             }
         }
