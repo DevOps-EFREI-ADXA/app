@@ -1,22 +1,21 @@
 #!/bin/bash
 
-env=$1
-versionNumber=$2
+env=$(echo "$1" | tr -d '\r')
+versionNumber=$(echo "$2" | tr -d '\r')
 file="k8s/k8s-prod.yaml"
 
-if [ env -e "development" ]; then
+if [ "$env" == "development" ]; then
   file="k8s/k8s-dev.yaml"
 fi
 
 # Start Minikube cluster
-minikube start
+minikube start 
 
-minikube kubectl -- create namespace $env --dry-run=client -o yaml | kubectl apply -f -
+minikube kubectl -- create namespace "$env" --dry-run=client -o yaml | minikube kubectl -- apply -f -
 
-minikube kubectl -- config set-context --current --namespace=$env
+minikube kubectl -- config set-context --current --namespace="$env"
 
-sed -i 's/<VERSION>/${versionNumber}/g' $file
+sed -i "s/<VERSION>/${versionNumber}/g" "$file"
 
-cat k8s/k8s-dev.yaml
+minikube kubectl -- apply -f "$file"
 
-minikube kubectl -- apply -f $file
