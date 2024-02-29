@@ -8,7 +8,7 @@ pipeline {
     }
     
     environment {
-        test = "test1"
+        test = "test3"
         env = 'development'
     }
     
