@@ -1,6 +1,6 @@
 def appImage = ''
 def versionNumber = ''
-def branchName = scm.branches[0].name.split("/")[1]
+def branchName = 'main'
 def env = 'development'
 
 pipeline {
