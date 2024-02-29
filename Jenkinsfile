@@ -1,15 +1,32 @@
 def appImage = ''
 def versionNumber = ''
+def branchName = scm.branches[0].name.split("/")[1]
 
 pipeline {
     agent {
         label 'slave'
     }
+    
+    environment {
+        // branchName = ''
+        env = 'development'
+    }
+    
     stages {
-
+        
+        stage('Defining env var') {
+            steps {
+                script {
+                    sh "echo Branch ${branchName}"
+                    if (branchName.equalsIgnoreCase('main')) {
+                        env = 'production'
+                    }
+                }
+            }
+        }
         stage('Git clone') {
             steps {
-                git branch: 'main', credentialsId: 'github_key', url: 'git@github.com:DevOps-EFREI-ADXA/app.git'
+                git branch: "${branchName}", credentialsId: 'github_key', url: 'git@github.com:DevOps-EFREI-ADXA/app.git'
             }
         }
 
@@ -43,7 +60,7 @@ pipeline {
         stage('Deploy K8s') {
             steps {
                 script {
-                    sh "cd scripts/ chmod +x deploy-infrastructure.sh development ${versionNumber} && cd .."
+                    sh "cd scripts/ chmod +x deploy-infrastructure.sh ${env} ${versionNumber} && cd .."
                 }
             }
         }
@@ -51,7 +68,7 @@ pipeline {
             steps {
                 script {
                     sh "cd scripts/ chmod +x test-deploy.sh && cd .."
-                    sh 'minikube kubectl -- port-forward deployment/st2dce-application 8080 --namespace development &'
+                    sh 'minikube kubectl -- port-forward deployment/st2dce-application 8080 --namespace ${env} &'
                     sh 'curl http://localhost:8080'
                 }
             }
