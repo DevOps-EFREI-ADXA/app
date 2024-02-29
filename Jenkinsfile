@@ -8,7 +8,6 @@ pipeline {
     }
     
     environment {
-        // branchName = ''
         env = 'development'
     }
     
