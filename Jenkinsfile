@@ -1,6 +1,5 @@
 def appImage = ''
 def versionNumber = ''
-def branchName = 'main'
 def env = 'development'
 
 pipeline {
