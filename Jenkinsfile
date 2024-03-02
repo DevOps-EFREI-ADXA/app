@@ -1,6 +1,7 @@
 def appImage = ''
 def versionNumber = ''
 def env = 'development'
+def branchName = 'main'
 
 pipeline {
     agent {
@@ -12,14 +13,6 @@ pipeline {
         stage('Defining env var') {
             steps {
                 script {
-                    def branchName
-                    def branchList = sh(script: 'git branch --contains HEAD --format="%(refname:short)"', returnStdout: true).trim()
-                    branchList.eachLine { line ->
-                        if (!line.startsWith('*')) {
-                            branchName = line.trim()
-                        }
-                    }
-                    echo "Branch ${branchName}"
                     if (branchName.equalsIgnoreCase('main')) {
                         env = 'production'
                     }
