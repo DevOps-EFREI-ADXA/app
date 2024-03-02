@@ -12,7 +12,13 @@ pipeline {
         stage('Defining env var') {
             steps {
                 script {
-                    def branchName = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+                    def branchName
+                    def branchList = sh(script: 'git branch --contains HEAD --format="%(refname:short)"', returnStdout: true).trim()
+                    branchList.eachLine { line ->
+                        if (!line.startsWith('*')) {
+                            branchName = line.trim()
+                        }
+                    }
                     echo "Branch ${branchName}"
                     if (branchName.equalsIgnoreCase('main')) {
                         env = 'production'
