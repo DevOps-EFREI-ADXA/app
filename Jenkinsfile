@@ -13,6 +13,7 @@ pipeline {
         stage('Defining env var') {
             steps {
                 script {
+                    echo "BRANCH_NAME = ${env.BRANCH_NAME}"
                     sh "echo Branch ${branchName}"
                     if (branchName.equalsIgnoreCase('main')) {
                         env = 'production'
