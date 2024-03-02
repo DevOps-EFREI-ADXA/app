@@ -14,6 +14,7 @@ pipeline {
             steps {
                 script {
                     echo "BRANCH_NAME = ${env.BRANCH_NAME}"
+                    echo "BUILD_NUMBER = ${env.BUILD_NUMBER}"
                     sh "echo Branch ${branchName}"
                     if (branchName.equalsIgnoreCase('main')) {
                         env = 'production'
